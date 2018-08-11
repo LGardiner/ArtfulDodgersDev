@@ -83,7 +83,7 @@ Thank you!`;
 			emailData['subject'] = `New Order: Bundle of Sticks - ${charge.id}`;
 
 			// send email to supplier
-			mailgun.messages().send(emailData);
+			// mailgun.messages().send(emailData);
 
 			// send response with charge data
 			res.json({ error: false, charge: charge });
