@@ -33,7 +33,9 @@ var stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 // ROUTES
 router.post('/charge', function(req, res){
-
+	console.log("req recieved", req);
+	console.log("req recieved token", req.body.token_from_stripe);
+	
 	var newCharge = {
 		amount: 23500,
 		currency: "usd",
@@ -52,6 +54,7 @@ router.post('/charge', function(req, res){
 		}
 	};
 
+	console.log("trigger charge", newCharge);
 	// trigger charge
 	stripe.charges.create(newCharge, function(err, charge) {
 		// send response
