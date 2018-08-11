@@ -77,7 +77,7 @@ Thank you!`;
 			};
 
 			// send email to customer
-			mailgun.messages().send(emailData);
+			// mailgun.messages().send(emailData);
 
 			emailData['to'] = 'your_support_email@gmail.com';
 			emailData['subject'] = `New Order: Bundle of Sticks - ${charge.id}`;
