@@ -24,17 +24,15 @@ app.use(express.static(__dirname + '/public'));
 var stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 // mailgun config
-// var domain = 'employbl.herokuapp.com';
-// // var mailcomposer = require('mailcomposer');
-// var mailgun = require('mailgun-js')({ 
-// 	apiKey: process.env.MAILGUN_API_KEY, 
-// 	domain: domain 
-// });
+var domain = 'artfuldodgerserver.herokuapp.com';
+// var mailcomposer = require('mailcomposer');
+var mailgun = require('mailgun-js')({ 
+	apiKey: process.env.MAILGUN_API_KEY, 
+	domain: domain 
+});
 
 // ROUTES
 router.post('/charge', function(req, res){
-	console.log("req recieved", req);
-	console.log("req recieved token", req.body.token_from_stripe);
 	
 	var newCharge = {
 		amount: 23500,
@@ -80,13 +78,14 @@ Thank you!`;
 			};
 
 			// send email to customer
-			// mailgun.messages().send(emailData);
+			mailgun.messages().send(emailData);
 
 			emailData['to'] = 'your_support_email@gmail.com';
 			emailData['subject'] = `New Order: Bundle of Sticks - ${charge.id}`;
 
 			// send email to supplier
-			// mailgun.messages().send(emailData);
+			mailgun.messages().send(emailData);
+			console.log("mail sent");
 
 			// send response with charge data
 			res.json({ error: false, charge: charge });
