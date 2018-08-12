@@ -66,7 +66,7 @@ router.post('/charge', function(req, res){
 			Engraving: ${newCharge.description} \n
 			Shipping Info: ${newCharge.shipping.address.line1}, ${newCharge.shipping.address.city}, ${newCharge.shipping.address.state} ${newCharge.shipping.address.postal_code} \n
 			Amount: ${newCharge.amount} \n
-			Your full order details are available at stickly.io/#/order-complete/${charge.id} \n
+			Your full order details are available at something.artfuldodgers.co.nz/${charge.id} \n
 			For questions contact services@artfuldodger.co.nz \n 
 			Thank you!`;
 			// compose email
