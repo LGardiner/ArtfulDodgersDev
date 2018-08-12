@@ -24,12 +24,13 @@ app.use(express.static(__dirname + '/public'));
 var stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 // mailgun config
-var domain = 'sandboxec32f79b28d94e38a4637d3f03daaf92.mailgun.org';
+var domain = 'artfuldodgers.co.nz';
 var mailcomposer = require('mailcomposer');
 var mailgun = require('mailgun-js')({ 
 	apiKey: process.env.MAILGUN_API_KEY, 
 	domain: domain 
 });
+console.log('domain ', domain)
 
 // ROUTES
 router.post('/charge', function(req, res){
@@ -52,7 +53,6 @@ router.post('/charge', function(req, res){
 		}
 	};
 
-	console.log("trigger charge", newCharge);
 	// trigger charge
 	stripe.charges.create(newCharge, function(err, charge) {
 		// send response
@@ -62,26 +62,26 @@ router.post('/charge', function(req, res){
 		} else {
 			// format for email
 			var emailTemplate = `Hello ${newCharge.shipping.name}, \n
-Congratulations on ordering a hand picked Bundle of Sticks! \n
-Engraving: ${newCharge.description} \n
-Shipping Info: ${newCharge.shipping.address.line1}, ${newCharge.shipping.address.city}, ${newCharge.shipping.address.state} ${newCharge.shipping.address.postal_code} \n
-Amount: ${newCharge.amount} \n
-Your full order details are available at stickly.io/#/order-complete/${charge.id} \n
-For questions contact your_support_email@gmail.com \n 
-Thank you!`;
+			Congratulations on ordering a AD ring! \n
+			Engraving: ${newCharge.description} \n
+			Shipping Info: ${newCharge.shipping.address.line1}, ${newCharge.shipping.address.city}, ${newCharge.shipping.address.state} ${newCharge.shipping.address.postal_code} \n
+			Amount: ${newCharge.amount} \n
+			Your full order details are available at stickly.io/#/order-complete/${charge.id} \n
+			For questions contact services@artfuldodger.co.nz \n 
+			Thank you!`;
 			// compose email
 			var emailData = {
-				from: 'Your Name <your_support_email@gmail.com>',
+				from: 'Your Name <services@artfuldodgers.co.nz>',
 				to: req.body.email,
-				subject: 'Bundle of Sticks Receipt - ' + charge.id,
+				subject: 'Artful Dodgers Receipt - ' + charge.id,
 				text: emailTemplate
 			};
 
 			// send email to customer
 			mailgun.messages().send(emailData);
 
-			emailData['to'] = 'your_support_email@gmail.com';
-			emailData['subject'] = `New Order: Bundle of Sticks - ${charge.id}`;
+			emailData['to'] = 'woaitsleo@gmail.com';
+			emailData['subject'] = `New Order: AD ring - ${charge.id}`;
 
 			// send email to supplier
 			mailgun.messages().send(emailData, function(err, success){
@@ -91,7 +91,7 @@ Thank you!`;
 					console.log("success", success);
 				}
 			});
-			console.log("mail sent");
+			console.log("mail sent 2");
 
 			// send response with charge data
 			res.json({ error: false, charge: charge });
