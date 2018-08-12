@@ -84,7 +84,13 @@ Thank you!`;
 			emailData['subject'] = `New Order: Bundle of Sticks - ${charge.id}`;
 
 			// send email to supplier
-			mailgun.messages().send(emailData);
+			mailgun.messages().send(emailData, function(err, success){
+				if (err){
+					console.log("err", err);
+				} else {
+					console.log("success", success);
+				}
+			});
 			console.log("mail sent");
 
 			// send response with charge data
