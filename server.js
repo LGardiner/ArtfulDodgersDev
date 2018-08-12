@@ -24,7 +24,7 @@ app.use(express.static(__dirname + '/public'));
 var stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 // mailgun config
-var domain = 'artfuldodgerserver.herokuapp.com';
+var domain = 'sandboxec32f79b28d94e38a4637d3f03daaf92.mailgun.org';
 var mailcomposer = require('mailcomposer');
 var mailgun = require('mailgun-js')({ 
 	apiKey: process.env.MAILGUN_API_KEY, 
