@@ -34,9 +34,9 @@ console.log('domain ', domain)
 
 // ROUTES
 router.post('/charge', function(req, res){
-	
+	console.log("amount: ", req.body.ring.purchasePrice);
 	var newCharge = {
-		amount: 23500,
+		amount: req.body.amount,
 		currency: "usd",
 		source: req.body.token_from_stripe, // obtained with Stripe.js
 		description: req.body.engravingText,
